@@ -2,36 +2,34 @@
 
 **Your workspace. Your priorities. Your dashboard.**
 
-Dashboard brings a clear, personal workspace to Advanced Web Tools. Keep useful tools within reach, organize your daily work, and return to the pages that matter—all from one place.
+Dashboard is a personal workspace for Advanced Web Tools that brings your everyday website tools together. Keep useful information in view, capture ideas, and return to recent pages from one clear starting point.
 
-Designed for website administrators and content teams, Dashboard turns the start of each session into a familiar workspace that fits the way you work.
+Built for website administrators and content teams, Dashboard lets each user organize their workspace around the way they work.
 
-## Make it yours
+## Put your priorities first
 
-Choose the widgets you want to see, arrange them in your preferred order, and hide anything you do not need. Each user has their own layout, so everyone can focus on their own priorities.
+Choose the widgets you need, arrange them in your preferred order, and hide the rest. Your layout is saved for your account, giving every team member their own familiar starting point.
 
-Explore available widgets, find what you need with search, and preview your changes before saving. You can also restore the default layout whenever you want a fresh start.
+Search available widgets, review layout changes before saving, or restore the default arrangement whenever you want a fresh start.
 
-## Small tools for everyday work
+## Everyday essentials, ready to use
 
-- **A personal welcome:** Start your session with a greeting, the current date, and a daily tip.
-- **Personal notes:** Capture reminders, ideas, and next steps without leaving your dashboard. Notes save automatically in the browser you use.
-- **Recently visited pages:** Pick up where you left off with quick access to the pages you recently opened.
+- **Personal welcome:** Begin your session with a greeting, the current date, and a daily tip.
+- **Personal notes:** Capture reminders, ideas, and next steps with automatic saving in your current browser.
+- **Recently visited pages:** Quickly return to pages you recently opened and pick up where you left off.
 
-Your notes and recent pages stay in the current browser, making them convenient companions for your everyday workspace.
+Notes and recent page history stay in the browser where you use them; they do not sync across devices.
 
-## Comfortable wherever you work
+## Work comfortably on any screen
 
-A responsive layout adapts to desktop, tablet, and mobile screens. Light and dark themes let you choose the appearance that suits you, while clear navigation helps you move between available areas of your website.
+Dashboard adapts to desktop, tablet, and mobile screens. Choose a light or dark theme, move widgets by dragging or using simple controls, and keep your workspace organized as your needs change.
 
-Rearrange widgets by dragging them or using simple move controls. Keep a compact overview or give important widgets more space—the choice is yours.
+## Grow with your website
 
-## A workspace that grows with your website
-
-Dashboard supports additional widgets from compatible AWT packages, bringing more of your website’s tools into the same workspace. Available navigation and widgets can reflect each user’s access level, helping teams keep their workspace relevant to their role.
+Compatible AWT packages can add more widgets to your workspace. Navigation and available widgets can reflect each user’s access level, keeping the experience relevant to their role.
 
 ## Get Dashboard
 
-Download the latest Dashboard package from [GitHub Releases](https://github.com/Advanced-Web-Tools/Dashboard/releases).
+Find **Dashboard 1.0.0** on [GitHub Releases](https://github.com/Advanced-Web-Tools/Dashboard/releases).
 
 **Give your daily work a place of its own.**
