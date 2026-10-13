@@ -1,0 +1,38 @@
+# Normalize text files while preserving binary assets.
+* text=auto
+*.sh text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.php text eol=lf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.zip binary
+
+# Development files are excluded from git archive exports.
+.gitignore export-ignore
+.gitattributes export-ignore
+.github export-ignore
+.gitmodules export-ignore
+.editorconfig export-ignore
+.idea export-ignore
+.vscode export-ignore
+.agents export-ignore
+.codex export-ignore
+.aws export-ignore
+.awt export-ignore
+build export-ignore
+build.sh export-ignore
+build.bat export-ignore
+releases export-ignore
+tests export-ignore
+AGENTS.md export-ignore
+[Rr][Ee][Aa][Dd][Mm][Ee]* export-ignore
+[Ll][Ii][Cc][Ee][Nn][Ss][Ee]* export-ignore
+[Ll][Ii][Cc][Ee][Nn][Cc][Ee]* export-ignore
+[Cc][Oo][Pp][Yy][Ii][Nn][Gg]* export-ignore
+[Cc][Hh][Aa][Nn][Gg][Ee][Ll][Oo][Gg]* export-ignore
+[Cc][Oo][Nn][Tt][Rr][Ii][Bb][Uu][Tt][Ii][Nn][Gg]* export-ignore
