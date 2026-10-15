@@ -14,7 +14,6 @@ use Dashboard\api\events\WidgetRegistryEvent;
 use Dashboard\api\navigation\NavigationItem;
 use Dashboard\api\widget\DashboardWidget;
 use Dashboard\api\widget\WidgetDefinition;
-use Dashboard\cli\AdminCreationCommand;
 use Dashboard\widgets\PersonalNotesWidget;
 use Dashboard\widgets\RecentlyVisitedWidget;
 use Dashboard\widgets\WelcomeWidget;
@@ -31,7 +30,6 @@ final class DashboardMain extends RuntimeLinkerAPI
     {
         parent::environmentSetup();
         $this->setRuntimeFlag(ERuntimeFlags::EventDispatcher);
-        $this->setRuntimeFlag(ERuntimeFlags::CommandProvider);
         $this->waitForPackage("URPC");
     }
 
@@ -47,8 +45,6 @@ final class DashboardMain extends RuntimeLinkerAPI
 
     public function main(): void
     {
-        $this->addCommand(new AdminCreationCommand());
-
         $this->registerLinks();
         $this->registerNavigation();
         $this->registerWidgets();
