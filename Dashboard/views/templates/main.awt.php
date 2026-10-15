@@ -14,6 +14,7 @@
     $activeAdmin = new \admin\Admin();
     $activeAdminAuthenticated = $activeAdmin->checkAuthentication();
     $activeAdminName = trim(($activeAdmin->firstname ?? '') . ' ' . ($activeAdmin->lastname ?? ''));
+    $activeAdminPicture = trim($activeAdmin->profile_picture ?? '');
 @endphp
 <body class="awt-ui" data-dashboard-user="{{ $activeAdminAuthenticated ? $activeAdmin->getKey() : '' }}">
 <div class="app-shell">
@@ -31,8 +32,13 @@
         @if($activeAdminAuthenticated)
             <footer class="sidebar-footer" aria-label="Current user">
                 <div class="sidebar-user">
-                    <span class="sidebar-user-name">{{ $activeAdminName !== '' ? $activeAdminName : $activeAdmin->username }}</span>
-                    <span class="sidebar-caption">{{ $activeAdmin->username }} · {{ $activeAdmin->role ?? 'User' }}</span>
+                    @if($activeAdminPicture !== '')
+                        <img class="sidebar-user-picture" src="{{ $activeAdminPicture }}" alt="" width="40" height="40" referrerpolicy="no-referrer">
+                    @endif
+                    <div class="sidebar-user-details">
+                        <span class="sidebar-user-name">{{ $activeAdminName !== '' ? $activeAdminName : $activeAdmin->username }}</span>
+                        <span class="sidebar-caption">{{ $activeAdmin->username }} · {{ $activeAdmin->role ?? 'User' }}</span>
+                    </div>
                 </div>
                 <div class="sidebar-footer-actions">
                     <button id="dark-mode-toggle" class="btn btn-ghost btn-icon" type="button" data-theme-toggle aria-label="Switch to dark mode" title="Switch to dark mode">

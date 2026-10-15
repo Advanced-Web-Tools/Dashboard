@@ -456,7 +456,9 @@ input[type=color].form-control { width: calc(var(--touch-size) + var(--space-4))
 .sidebar > * { flex-shrink: 0; }
 .sidebar-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-1); margin-top: auto; padding: var(--space-2) var(--space-1) var(--space-1); border-top: var(--border-width) solid var(--border); }
 .sidebar-footer-actions { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); width: 100%; flex-shrink: 0; }
-.sidebar-user { min-width: 0; width: 100%; }
+.sidebar-user { display: flex; align-items: center; gap: var(--space-2); min-width: 0; width: 100%; }
+.sidebar-user-picture { display: block; width: 40px; height: 40px; flex-shrink: 0; border-radius: 50%; object-fit: cover; }
+.sidebar-user-details { min-width: 0; }
 .sidebar-user-name { display: block; font-size: var(--small-size); font-weight: var(--weight-bold); overflow-wrap: anywhere; }
 .sidebar-footer .btn { flex-shrink: 0; }
 .sidebar-open .sidebar { transform: translateX(0); visibility: visible; }

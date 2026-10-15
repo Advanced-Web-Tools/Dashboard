@@ -23,7 +23,7 @@ use runtime\api\RuntimeLinkerAPI;
 use runtime\enums\ERuntimeFlags;
 use vfs\resource\exceptions\ResourceException;
 
-final class main extends RuntimeLinkerAPI
+final class DashboardMain extends RuntimeLinkerAPI
 {
     private NavigationItem $navigationItem;
 
@@ -40,8 +40,8 @@ final class main extends RuntimeLinkerAPI
      */
     public function setup(): void
     {
-        $icon = "/awt_packages/Dashboard/data/icon/icon.png";
-        $this->navigationItem = new NavigationItem("Dashboard", "/dashboard", $icon);
+        $icon = "/awt_packages/Dashboard/views/assets/images/home.webp";
+        $this->navigationItem = new NavigationItem("Home", "/dashboard", $icon);
         $this->navigationItem->setPosition(NavigationItem::START);
     }
 
