@@ -7,7 +7,7 @@
   "type": 1,
   "system_package": 1,
   "description": "Extensible CMS dashboard with per-user widget visibility, ordering and a widget editor.",
-  "icon": "icon.png",
+  "icon": "icon.webp",
   "preview_image": null,
   "license": "MIT",
   "license_url": "https://github.com/Advanced-Web-Tools/Dashboard/blob/main/LICENSE",
