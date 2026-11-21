@@ -5,6 +5,7 @@
 
     const notesKey = `dashboard:${user}:notes`;
     const historyKey = `dashboard:${user}:recent-pages`;
+    const pinsKey = `dashboard:${user}:pinned-pages`;
     const maxRecent = 6;
     let storageAvailable = true;
     let savedTimer;
@@ -22,10 +23,8 @@
     function write(key, value) {
         try {
             window.localStorage.setItem(key, value);
-            storageAvailable = true;
             return true;
         } catch (_) {
-            storageAvailable = false;
             return false;
         }
     }
@@ -37,6 +36,7 @@
             const url = new URL(link.getAttribute('href'), window.location.href);
             const path = url.pathname.replace(/\/+$/, '') || '/';
             if (url.origin !== window.location.origin || !['http:', 'https:'].includes(url.protocol)
+                || url.pathname.startsWith('//')
                 || ['/dashboard', '/dashboard/login', '/dashboard/logout'].includes(path)
                 || path.startsWith('/dashboard/action/')) return;
             pages.set(url.pathname + url.search, {
@@ -68,6 +68,17 @@
         }
     }
 
+    function parsePins(value) {
+        try {
+            const parsed = JSON.parse(value || '[]');
+            return new Set(Array.isArray(parsed) ? parsed.filter(url => typeof url === 'string') : []);
+        } catch (_) {
+            return new Set();
+        }
+    }
+
+    let pins = parsePins(read(pinsKey));
+    let pinsStorageAvailable = storageAvailable;
     let notes = (read(notesKey) || '').slice(0, 4000);
     let recent = parseHistory(read(historyKey));
     const currentPath = window.location.pathname;
@@ -75,7 +86,7 @@
         || pages.get(currentPath);
     if (current) {
         recent = [{ url: current.url, visitedAt: Date.now() }, ...recent.filter(entry => entry.url !== current.url)].slice(0, maxRecent);
-        write(historyKey, JSON.stringify(recent));
+        storageAvailable = write(historyKey, JSON.stringify(recent));
     }
 
     function renderNotes() {
@@ -161,16 +172,64 @@
         });
     }
 
+    function renderPins(message = '') {
+        document.querySelectorAll('[data-pinned-pages]').forEach(widget => {
+            const list = widget.querySelector('[data-pinned-list]');
+            const select = widget.querySelector('[data-pinned-select]');
+            const selection = select.value;
+            list.replaceChildren();
+            select.replaceChildren();
+
+            for (const url of pins) {
+                const page = pages.get(url);
+                if (!page) continue;
+                const item = document.createElement('li');
+                const link = document.createElement('a');
+                link.className = 'recent-page-link';
+                link.href = page.url;
+                link.textContent = page.label;
+                const remove = document.createElement('button');
+                remove.type = 'button';
+                remove.className = 'btn btn-ghost btn-sm';
+                remove.dataset.pinnedRemove = url;
+                remove.setAttribute('aria-label', `Unpin ${page.label}`);
+                remove.textContent = 'Unpin';
+                item.append(link, remove);
+                list.append(item);
+            }
+
+            for (const page of pages.values()) {
+                if (pins.has(page.url)) continue;
+                select.add(new Option(page.label, page.url));
+            }
+            if (pages.has(selection) && !pins.has(selection)) select.value = selection;
+            select.disabled = select.options.length === 0;
+            widget.querySelector('[data-pinned-add]').disabled = select.disabled;
+
+            const status = widget.querySelector('[data-pinned-status]');
+            if (!pinsStorageAvailable) {
+                status.textContent = 'Browser storage is unavailable. Changes will last until you leave this page.';
+            } else if (message) {
+                status.textContent = message;
+            } else if (pages.size === 0) {
+                status.textContent = 'No sidebar pages are available to pin.';
+            } else {
+                status.textContent = list.childElementCount ? 'Saved in this browser.' : 'Choose a sidebar page to pin.';
+            }
+        });
+    }
+
     function render() {
         renderNotes();
         renderRecent();
+        renderPins();
     }
 
     document.addEventListener('input', event => {
         const input = event.target.closest('[data-notes-input]');
         if (!input) return;
         notes = input.value.slice(0, 4000);
-        const saved = write(notesKey, notes);
+        const saved = storageAvailable = write(notesKey, notes);
         const status = input.closest('[data-personal-notes]').querySelector('[data-notes-status]');
         clearTimeout(savedTimer);
         savedTimer = setTimeout(() => {
@@ -179,11 +238,30 @@
     });
 
     document.addEventListener('click', event => {
+        const pinAction = event.target.closest('[data-pinned-add], [data-pinned-remove]');
+        if (pinAction) {
+            const widget = pinAction.closest('[data-pinned-pages]');
+            const select = widget.querySelector('[data-pinned-select]');
+            const removing = pinAction.hasAttribute('data-pinned-remove');
+            const url = removing ? pinAction.dataset.pinnedRemove : select.value;
+            const page = pages.get(url);
+            if (!page) return;
+
+            if (removing) {
+                pins.delete(url);
+            } else {
+                pins.add(url);
+            }
+            pinsStorageAvailable = write(pinsKey, JSON.stringify([...pins]));
+            renderPins(removing ? `Unpinned ${page.label}.` : `Pinned ${page.label}.`);
+            (select.disabled ? widget.querySelector('[data-pinned-list] a') : select)?.focus();
+            return;
+        }
         const undo = event.target.closest('[data-recent-undo]');
         if (undo && clearedHistory !== null) {
             recent = clearedHistory;
             clearedHistory = null;
-            write(historyKey, JSON.stringify(recent));
+            storageAvailable = write(historyKey, JSON.stringify(recent));
             renderRecent();
             undo.closest('[data-recently-visited]').querySelector('.recent-page-link')?.focus();
             return;
@@ -192,13 +270,18 @@
         if (!button) return;
         clearedHistory = recent;
         recent = [];
-        write(historyKey, '[]');
+        storageAvailable = write(historyKey, '[]');
         renderRecent();
         button.closest('[data-recently-visited]').querySelector('[data-recent-status]').setAttribute('tabindex', '-1');
         button.closest('[data-recently-visited]').querySelector('[data-recent-status]').focus();
     });
 
     window.addEventListener('storage', event => {
+        if (event.key === pinsKey || event.key === null) {
+            pins = parsePins(event.key === null ? null : event.newValue);
+            pinsStorageAvailable = true;
+            renderPins();
+        }
         if (event.key === historyKey || event.key === null) {
             clearedHistory = null;
             recent = parseHistory(event.key === null ? null : event.newValue);

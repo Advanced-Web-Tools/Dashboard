@@ -15,6 +15,7 @@ use Dashboard\api\navigation\NavigationItem;
 use Dashboard\api\widget\DashboardWidget;
 use Dashboard\api\widget\WidgetDefinition;
 use Dashboard\widgets\PersonalNotesWidget;
+use Dashboard\widgets\PinnedPagesWidget;
 use Dashboard\widgets\RecentlyVisitedWidget;
 use Dashboard\widgets\WelcomeWidget;
 use object\ObjectFactory;
@@ -95,6 +96,16 @@ final class DashboardMain extends RuntimeLinkerAPI
                 factory: $this->widgetFactory(RecentlyVisitedWidget::class),
                 defaultVisible: true,
                 defaultPosition: 20,
+                size: DashboardWidget::SIZE_MEDIUM,
+            ),
+            new WidgetDefinition(
+                key: "Dashboard/pinned-pages",
+                packageName: "Dashboard",
+                label: "Pinned pages",
+                description: "Keep shortcuts to your frequently used sidebar pages.",
+                factory: $this->widgetFactory(PinnedPagesWidget::class),
+                defaultVisible: false,
+                defaultPosition: 30,
                 size: DashboardWidget::SIZE_MEDIUM,
             ),
         ];

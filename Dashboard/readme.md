@@ -17,8 +17,9 @@ Search available widgets, review layout changes before saving, or restore the de
 - **Personal welcome:** Begin your session with a greeting, the current date, and a daily tip.
 - **Personal notes:** Capture reminders, ideas, and next steps with automatic saving in your current browser.
 - **Recently visited pages:** Quickly return to pages you recently opened and pick up where you left off.
+- **Pinned pages:** Enable this widget under **Edit widgets** to keep shortcuts to the sidebar pages you use most.
 
-Notes and recent page history stay in the browser where you use them; they do not sync across devices.
+Notes, recent page history, and pinned pages are saved in the browser where you use them.
 
 ## Work comfortably on any screen
 
